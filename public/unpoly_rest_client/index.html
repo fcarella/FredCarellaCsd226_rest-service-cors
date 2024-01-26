@@ -16,34 +16,15 @@
       // A request object is also a promise for its response
       let response = await request
       console.log(response.text)
-      display(response.text)
+      //display(response.text)
+      return response.text
 
-    }
-    async function f2() {
-      try {
-        let response = await up.request('http://localhost:8080/greeting', {params: {name: 'fred carella'}})
-        console.log('Successful response with text:', response.text)
-        display(response.text)
-      } catch (e) {
-        if (e instanceof up.Response) {
-          console.log('Server responded with HTTP status %s and text %s', e.status, e.text)
-        } else {
-          console.log('Fatal error during request:', e.message)
-        }
-      }
-    }
-    function display(text){
-      const elem = document.getElementById("p1");
-      elem.innerText=text;
     }
 
   </script>
 </head>
 <body>
-<p><button onclick = "f()" > Call the "greeting" spring based REST service... </button></p>
-<div id="greeting1"></div>
-<p><button onclick = "f2()" > Call the "greeting" spring based REST service... </button></p>
-<div id="greeting2"></div>
-<p id="p1">p</p>
+<a href="http://localhost:8080/greeting" up-target="#content">link...</a>
+<p up-target='#content'>class story</p>
 </body>
 </html>

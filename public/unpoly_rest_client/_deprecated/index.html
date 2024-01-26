@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>call_spring_greetings</title>
+  <script src="https://cdn.jsdelivr.net/npm/unpoly@3.7.2/unpoly.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unpoly@3.7.2/unpoly.min.css">
+
+  <script>
+    // alert('rest1')
+    // https://www.freecodecamp.org/news/javascript-async-await/
+    async function f() {
+
+      let request = up.request('http://localhost:8080/greeting')
+      console.log("REQUEST URL********** "+request.url)
+      // A request object is also a promise for its response
+      let response = await request
+      console.log(response.text)
+      display(response.text)
+
+    }
+    async function f2() {
+      try {
+        let response = await up.request('http://localhost:8080/greeting', {params: {name: 'fred carella'}})
+        console.log('Successful response with text:', response.text)
+        display(response.text)
+      } catch (e) {
+        if (e instanceof up.Response) {
+          console.log('Server responded with HTTP status %s and text %s', e.status, e.text)
+        } else {
+          console.log('Fatal error during request:', e.message)
+        }
+      }
+    }
+async function f3() {
+  let request = up.request('http://localhost:8080/greeting')
+  console.log("REQUEST URL********** " + request.url)
+  // A request object is also a promise for its response
+  let response = await request
+  console.log(response.text)
+  document.getElementById('p1').innerText = "XXXXXXXXXXXXX"
+  // up.render('#p1', { url: '/hi.html' });
+  // up.render({target: '.p1', url: '/hi.html', abort: false});
+  up.render('.story', { url: '/hi.html' });
+}
+
+    function display(text){
+      const elem = document.getElementById("p1");
+      elem.innerText=text;
+    }
+
+  </script>
+</head>
+<body>
+<p><button onclick = "f()" > Call the "greeting" spring based REST service... </button></p>
+<div id="greeting1"></div>
+<p><button onclick = "f2()" > Call the "greeting" spring based REST service... </button></p>
+<div id="greeting2"></div>
+<p><button onclick = "f3()" > Call the "greeting" spring based REST service... </button></p>
+<div id="greeting3"></div>
+<p class="p1">class p1</p>
+<p id="p1">id p1</p>
+<p up-target='.story'>class story</p>
+
+<a href="" up-target=".story" onclick="f()">link...</a>
+</body>
+</html>
